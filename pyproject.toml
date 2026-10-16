@@ -1,0 +1,45 @@
+[project]
+name = "deribit-price-tracker"
+version = "0.1.0"
+description = "Collects Deribit index prices every minute and serves them over HTTP"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic-settings",
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg",
+    "alembic",
+    "celery[redis]>=5.5,<5.7",
+    "aiohttp",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "httpx",
+    "celery-types",
+    "ruff",
+    "mypy",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+addopts = "-ra -q"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["F", "E", "W", "I", "N", "UP", "B", "ASYNC", "RUF", "SIM", "RET"]
+
+[tool.mypy]
+strict = true
+plugins = ["pydantic.mypy"]
